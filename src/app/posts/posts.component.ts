@@ -1,5 +1,5 @@
+import { PostService } from './../services/post.service';
 import { Component, OnInit } from '@angular/core';
-import { HttpClient  } from '@angular/common/http';
 
 @Component({
   selector: 'posts',
@@ -14,19 +14,28 @@ export class PostsComponent implements OnInit {
     body:'',
     userId:''
   }
+  status = true;
 
-  constructor(private http: HttpClient  ) { 
-    this.http.get('https://jsonplaceholder.typicode.com/posts')
-    .subscribe( response => {
-      this.posts = response;
-    } );
+  constructor(private postService: PostService  ) { 
+    
   }
 
   ngOnInit(): void {
+   this.getPosts();
+  }
+
+  getPosts(){
+    this.postService.getPosts()
+    .subscribe( response => {
+      this.posts = response;
+    },error=>{
+      alert('Erreur inattendue');
+      console.log(error);
+    } );
   }
 
   createPost(){
-    this.http.post('https://jsonplaceholder.typicode.com/posts',this.post)
+    this.postService.createPost(this.post)
       .subscribe( (Response:any)=> {
         this.post.id = Response.id;
         this.posts.unshift(this.post);
@@ -36,7 +45,42 @@ export class PostsComponent implements OnInit {
           body:'',
           userId:''
         }
+      },error=>{
+        alert('Erreur inattendue');
+        console.log(error);
       } )
+  }
+
+  editPost(post:any){
+    this.post = post;
+    this.status = false;
+  }
+
+  updatePost(){
+    this.postService.editPost(this.post)
+    .subscribe( Response =>{
+      this.post = {
+        id:0,
+        title : '',
+        body:'',
+        userId:''
+      };
+      this.status = true; 
+    } ,error=>{
+      alert('Erreur inattendue');
+      console.log(error);
+    })
+  }
+
+  deletePost(post:any){
+    this.postService.deletePost(this.post)
+    .subscribe( Response=>{
+      let index = this.posts.indexOf( post );
+      this.posts.splice( index, 1 );
+    },error=>{
+      alert('Erreur inattendue');
+      console.log(error);
+    } )
   }
 
 }

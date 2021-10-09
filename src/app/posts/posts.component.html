@@ -8,7 +8,8 @@
       <label for="body">title</label>
       <textarea  [(ngModel)]="post.body" name="body" type="text" class="form-control" id="body"></textarea>
     </div>
-    <button (click)='createPost()' type="submit" class="btn btn-primary mt-3 ">Submit</button>
+    <button (click)='createPost()' type="submit" class="btn btn-primary mt-3 " *ngIf="status">Submit</button>
+    <button (click)='updatePost()' type="submit" class="btn btn-danger mt-3 " *ngIf="!status">update</button>
   </form>
 
   
@@ -17,5 +18,7 @@
     <li class="list-group-item" *ngFor="let post of posts" >
         <h4>{{ post.title }}</h4>
         <p>{{ post.body }}</p>
+        <div (click)='editPost(post)' class="align-right" > <button class="btn-warning btn">Edit</button>  </div>
+        <div (click)='deletePost(post)' class="align-right mt-2" > <button class="btn-danger btn">Delete</button>  </div>
     </li>
 </ul>

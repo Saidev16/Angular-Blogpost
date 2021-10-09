@@ -1,3 +1,4 @@
+import { PostService } from './services/post.service';
 import { EmailService } from './email.service';
 import { CoursesService } from './courses.service';
 import { NgModule } from '@angular/core';
@@ -26,7 +27,7 @@ import { PostsComponent } from './posts/posts.component';
     FormsModule,
     HttpClientModule ,
   ],
-  providers: [CoursesService, EmailService],
+  providers: [CoursesService, EmailService, PostService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
