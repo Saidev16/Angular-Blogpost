@@ -73,13 +73,18 @@ export class PostsComponent implements OnInit {
   }
 
   deletePost(post:any){
-    this.postService.deletePost(this.post)
-    .subscribe( Response=>{
+    this.postService.deletePost(post)
+    .subscribe( (reponse:any) =>{
       let index = this.posts.indexOf( post );
       this.posts.splice( index, 1 );
-    },error=>{
-      alert('Erreur inattendue');
-      console.log(error);
+      console.log(this.posts);
+    },(error: Response )=>{
+      if( error.status === 404 ){
+        alert('ce poste est déja supprimé')
+      }else{
+        alert('Erreur inattendue');
+        console.log(error);
+      }
     } )
   }
 

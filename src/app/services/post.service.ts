@@ -1,5 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { AppError } from '../common/app-error';
+import { NotFoundError } from '../common/NotFoundError';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +26,7 @@ export class PostService {
   }
   deletePost(post:any){
     return this.http.delete('https://jsonplaceholder.typicode.com/posts/'+post.id)
+     
 
   }
 

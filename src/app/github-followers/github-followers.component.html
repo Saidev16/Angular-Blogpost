@@ -1,0 +1,5 @@
+<div *ngFor="let follower of followers" >
+    <h4>{{follower.login}}</h4>
+    <img [src]="follower.avatar_url" alt="avatar" height="100px" width="100px" >
+    <a target="_blank" [href]="follower.html_url">{{follower.html_url}}</a>
+</div>
